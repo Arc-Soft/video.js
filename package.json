@@ -73,7 +73,8 @@
     "prepublishOnly": "run-p build",
     "publish": "node build/gh-release.js",
     "version": "is-prerelease || npm run changelog && git add CHANGELOG.md",
-    "zip": "cd dist && cross-env bestzip \"./video-js-${npm_package_version}.zip\" * && cd .."
+    "zip": "cd dist && cross-env bestzip \"./video-js-${npm_package_version}.zip\" * && cd ..",
+    "postinstall": "cd ./node_modules/@videojs/http-streaming && npm i && npm run build-prod"
   },
   "repository": {
     "type": "git",
@@ -81,7 +82,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
-    "@videojs/http-streaming": "1.13.2",
+    "@videojs/http-streaming": "https://github.com/Arc-Soft/http-streaming.git",
     "@videojs/xhr": "2.5.1",
     "global": "4.3.2",
     "keycode": "^2.2.0",
