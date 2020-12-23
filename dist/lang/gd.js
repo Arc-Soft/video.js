@@ -1,4 +1,4 @@
-{
+videojs.addLanguage('gd', {
   "Audio Player": "Cluicheadair fuaime",
   "Video Player": "Cluicheadair video",
   "Play": "Cluich",
@@ -84,4 +84,4 @@
   "Beginning of dialog window. Escape will cancel and close the window.": "Toiseach uinneag còmhraidh. Sguiridh Escape dheth ’s dùinidh e an uinneag",
   "End of dialog window.": "Deireadh uinneag còmhraidh.",
   "{1} is loading.": "Tha {1} ’ga luchdadh."
-}
+});
