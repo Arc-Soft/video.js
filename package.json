@@ -73,8 +73,7 @@
     "prepublishOnly": "run-p build",
     "publish": "node build/gh-release.js",
     "version": "is-prerelease || npm run changelog && git add CHANGELOG.md",
-    "zip": "cd dist && cross-env bestzip \"./video-js-${npm_package_version}.zip\" * && cd ..",
-    "postinstall": "cd ./node_modules/@videojs/http-streaming && npm i && npm run build-prod"
+    "zip": "cd dist && cross-env bestzip \"./video-js-${npm_package_version}.zip\" * && cd .."
   },
   "repository": {
     "type": "git",
