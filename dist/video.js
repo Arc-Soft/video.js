@@ -14,9 +14,9 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('global/window'), require('global/document')) :
   typeof define === 'function' && define.amd ? define(['global/window', 'global/document'], factory) :
   (global = global || self, global.videojs = factory(global.window, global.document));
-}(this, (function (window$5, document) { 'use strict';
+}(this, (function (window$3, document) { 'use strict';
 
-  window$5 = window$5 && Object.prototype.hasOwnProperty.call(window$5, 'default') ? window$5['default'] : window$5;
+  window$3 = window$3 && Object.prototype.hasOwnProperty.call(window$3, 'default') ? window$3['default'] : window$3;
   document = document && Object.prototype.hasOwnProperty.call(document, 'default') ? document['default'] : document;
 
   var version = "7.8.4";
@@ -60,19 +60,19 @@
       // still be stored in history.
 
 
-      if (!window$5.console) {
+      if (!window$3.console) {
         return;
       } // Was setting these once outside of this function, but containing them
       // in the function makes it easier to test cases where console doesn't exist
       // when the module is executed.
 
 
-      var fn = window$5.console[type];
+      var fn = window$3.console[type];
 
       if (!fn && type === 'debug') {
         // Certain browsers don't have support for console.debug. For those, we
         // should default to the closest comparable log.
-        fn = window$5.console.info || window$5.console.log;
+        fn = window$3.console.info || window$3.console.log;
       } // Bail out if there's no console or if this type is not allowed by the
       // current logging level.
 
@@ -81,7 +81,7 @@
         return;
       }
 
-      fn[Array.isArray(args) ? 'apply' : 'call'](window$5.console, args);
+      fn[Array.isArray(args) ? 'apply' : 'call'](window$3.console, args);
     };
   };
 
@@ -513,8 +513,8 @@
       return '';
     }
 
-    if (typeof window$5.getComputedStyle === 'function') {
-      var computedStyleValue = window$5.getComputedStyle(el);
+    if (typeof window$3.getComputedStyle === 'function') {
+      var computedStyleValue = window$3.getComputedStyle(el);
       return computedStyleValue ? computedStyleValue.getPropertyValue(prop) || computedStyleValue[prop] : '';
     }
 
@@ -590,7 +590,7 @@
 
   function isReal() {
     // Both document and window will never be undefined thanks to `global`.
-    return document === window$5.document;
+    return document === window$3.document;
   }
   /**
    * Determines, via duck typing, whether or not a value is a DOM element.
@@ -617,7 +617,7 @@
     // We need a try/catch here because Safari will throw errors when attempting
     // to get either `parent` or `self`
     try {
-      return window$5.parent !== window$5.self;
+      return window$3.parent !== window$3.self;
     } catch (x) {
       return true;
     }
@@ -1091,10 +1091,10 @@
     var docEl = document.documentElement;
     var body = document.body;
     var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-    var scrollLeft = window$5.pageXOffset || body.scrollLeft;
+    var scrollLeft = window$3.pageXOffset || body.scrollLeft;
     var left = box.left + scrollLeft - clientLeft;
     var clientTop = docEl.clientTop || body.clientTop || 0;
-    var scrollTop = window$5.pageYOffset || body.scrollTop;
+    var scrollTop = window$3.pageYOffset || body.scrollTop;
     var top = box.top + scrollTop - clientTop; // Android sometimes returns slightly off decimal values, so need to round
 
     return {
@@ -1462,7 +1462,7 @@
       videojs = vjs;
     }
 
-    window$5.setTimeout(autoSetup, wait);
+    window$3.setTimeout(autoSetup, wait);
   }
   /**
    * Used to set the internal tracking of window loaded state to true.
@@ -1473,7 +1473,7 @@
 
   function setWindowLoaded() {
     _windowLoaded = true;
-    window$5.removeEventListener('load', setWindowLoaded);
+    window$3.removeEventListener('load', setWindowLoaded);
   }
 
   if (isReal()) {
@@ -1488,7 +1488,7 @@
        *
        * @listens load
        */
-      window$5.addEventListener('load', setWindowLoaded);
+      window$3.addEventListener('load', setWindowLoaded);
     }
   }
 
@@ -1564,10 +1564,10 @@
    */
   var FakeWeakMap;
 
-  if (!window$5.WeakMap) {
+  if (!window$3.WeakMap) {
     FakeWeakMap = /*#__PURE__*/function () {
       function FakeWeakMap() {
-        this.vdata = 'vdata' + Math.floor(window$5.performance && window$5.performance.now() || Date.now());
+        this.vdata = 'vdata' + Math.floor(window$3.performance && window$3.performance.now() || Date.now());
         this.data = {};
       }
 
@@ -1626,7 +1626,7 @@
    */
 
 
-  var DomData = window$5.WeakMap ? new WeakMap() : new FakeWeakMap();
+  var DomData = window$3.WeakMap ? new WeakMap() : new FakeWeakMap();
 
   /**
    * @file events.js. An Event System (John Resig - Secrets of a JS Ninja http://jsninja.com/)
@@ -1731,7 +1731,7 @@
 
 
     if (!event || !event.isPropagationStopped) {
-      var old = event || window$5.event;
+      var old = event || window$3.event;
       event = {}; // Clone the old object so that we can modify the values event = {};
       // IE8 Doesn't like when you mess with native event properties
       // Firefox returns false for event.hasOwnProperty('type') and other props
@@ -1838,8 +1838,8 @@
             _supportsPassive = true;
           }
         });
-        window$5.addEventListener('test', null, opts);
-        window$5.removeEventListener('test', null, opts);
+        window$3.addEventListener('test', null, opts);
+        window$3.removeEventListener('test', null, opts);
       } catch (e) {// disregard
       }
     }
@@ -2200,10 +2200,10 @@
    */
 
   var throttle = function throttle(fn, wait) {
-    var last = window$5.performance.now();
+    var last = window$3.performance.now();
 
     var throttled = function throttled() {
-      var now = window$5.performance.now();
+      var now = window$3.performance.now();
 
       if (now - last >= wait) {
         fn.apply(void 0, arguments);
@@ -2242,7 +2242,7 @@
 
   var debounce = function debounce(func, wait, immediate, context) {
     if (context === void 0) {
-      context = window$5;
+      context = window$3;
     }
 
     var timeout;
@@ -2484,8 +2484,8 @@
 
     var oldTimeout = map.get(type);
     map["delete"](type);
-    window$5.clearTimeout(oldTimeout);
-    var timeout = window$5.setTimeout(function () {
+    window$3.clearTimeout(oldTimeout);
+    var timeout = window$3.setTimeout(function () {
       // if we cleared out all timeouts for the current target, delete its map
       if (map.size === 0) {
         map = null;
@@ -2987,7 +2987,7 @@
 
     target.on('dispose', function () {
       target.off();
-      window$5.setTimeout(function () {
+      window$3.setTimeout(function () {
         target.eventBusEl_ = null;
       }, 0);
     });
@@ -3300,7 +3300,7 @@
       this.childNameIndex_ = {};
       var SetSham;
 
-      if (!window$5.Set) {
+      if (!window$3.Set) {
         SetSham = /*#__PURE__*/function () {
           function SetSham() {
             this.set_ = {};
@@ -3333,9 +3333,9 @@
         }();
       }
 
-      this.setTimeoutIds_ = window$5.Set ? new Set() : new SetSham();
-      this.setIntervalIds_ = window$5.Set ? new Set() : new SetSham();
-      this.rafIds_ = window$5.Set ? new Set() : new SetSham();
+      this.setTimeoutIds_ = window$3.Set ? new Set() : new SetSham();
+      this.setIntervalIds_ = window$3.Set ? new Set() : new SetSham();
+      this.rafIds_ = window$3.Set ? new Set() : new SetSham();
       this.clearingTimersOnDispose_ = false; // Add any child components in options
 
       if (options.initChildren !== false) {
@@ -4483,7 +4483,7 @@
             pageY: event.touches[0].pageY
           }; // Record start time so we can detect a tap vs. "touch and hold"
 
-          touchStart = window$5.performance.now(); // Reset couldBeTap tracking
+          touchStart = window$3.performance.now(); // Reset couldBeTap tracking
 
           couldBeTap = true;
         }
@@ -4519,7 +4519,7 @@
 
         if (couldBeTap === true) {
           // Measure how long the touch lasted
-          var touchTime = window$5.performance.now() - touchStart; // Make sure the touch was less than the threshold to be considered a tap
+          var touchTime = window$3.performance.now() - touchStart; // Make sure the touch was less than the threshold to be considered a tap
 
           if (touchTime < touchTimeThreshold) {
             // Don't let browser turn this into a click
@@ -4635,7 +4635,7 @@
       var timeoutId;
       fn = bind(this, fn);
       this.clearTimersOnDispose_();
-      timeoutId = window$5.setTimeout(function () {
+      timeoutId = window$3.setTimeout(function () {
         if (_this2.setTimeoutIds_.has(timeoutId)) {
           _this2.setTimeoutIds_["delete"](timeoutId);
         }
@@ -4665,7 +4665,7 @@
     _proto.clearTimeout = function clearTimeout(timeoutId) {
       if (this.setTimeoutIds_.has(timeoutId)) {
         this.setTimeoutIds_["delete"](timeoutId);
-        window$5.clearTimeout(timeoutId);
+        window$3.clearTimeout(timeoutId);
       }
 
       return timeoutId;
@@ -4695,7 +4695,7 @@
     _proto.setInterval = function setInterval(fn, interval) {
       fn = bind(this, fn);
       this.clearTimersOnDispose_();
-      var intervalId = window$5.setInterval(fn, interval);
+      var intervalId = window$3.setInterval(fn, interval);
       this.setIntervalIds_.add(intervalId);
       return intervalId;
     }
@@ -4719,7 +4719,7 @@
     _proto.clearInterval = function clearInterval(intervalId) {
       if (this.setIntervalIds_.has(intervalId)) {
         this.setIntervalIds_["delete"](intervalId);
-        window$5.clearInterval(intervalId);
+        window$3.clearInterval(intervalId);
       }
 
       return intervalId;
@@ -4764,7 +4764,7 @@
 
       var id;
       fn = bind(this, fn);
-      id = window$5.requestAnimationFrame(function () {
+      id = window$3.requestAnimationFrame(function () {
         if (_this3.rafIds_.has(id)) {
           _this3.rafIds_["delete"](id);
         }
@@ -4800,7 +4800,7 @@
 
       if (this.rafIds_.has(id)) {
         this.rafIds_["delete"](id);
-        window$5.cancelAnimationFrame(id);
+        window$3.cancelAnimationFrame(id);
       }
 
       return id;
@@ -4940,7 +4940,7 @@
    */
 
 
-  Component.prototype.supportsRaf_ = typeof window$5.requestAnimationFrame === 'function' && typeof window$5.cancelAnimationFrame === 'function';
+  Component.prototype.supportsRaf_ = typeof window$3.requestAnimationFrame === 'function' && typeof window$3.cancelAnimationFrame === 'function';
   Component.registerComponent('Component', Component);
 
   function _assertThisInitialized(self) {
@@ -4996,7 +4996,7 @@
    * @file browser.js
    * @module browser
    */
-  var USER_AGENT = window$5.navigator && window$5.navigator.userAgent || '';
+  var USER_AGENT = window$3.navigator && window$3.navigator.userAgent || '';
   var webkitVersionMap = /AppleWebKit\/([\d.]+)/i.exec(USER_AGENT);
   var appleWebkitVersion = webkitVersionMap ? parseFloat(webkitVersionMap.pop()) : null;
   /**
@@ -5163,7 +5163,7 @@
    * @type {Boolean}
    */
 
-  var TOUCH_ENABLED = isReal() && ('ontouchstart' in window$5 || window$5.navigator.maxTouchPoints || window$5.DocumentTouch && window$5.document instanceof window$5.DocumentTouch);
+  var TOUCH_ENABLED = isReal() && ('ontouchstart' in window$3 || window$3.navigator.maxTouchPoints || window$3.DocumentTouch && window$3.document instanceof window$3.DocumentTouch);
   /**
    * Whether or not this device is an iPad.
    *
@@ -6404,7 +6404,7 @@
     _proto.focusableEls_ = function focusableEls_() {
       var allChildren = this.el_.querySelectorAll('*');
       return Array.prototype.filter.call(allChildren, function (child) {
-        return (child instanceof window$5.HTMLAnchorElement || child instanceof window$5.HTMLAreaElement) && child.hasAttribute('href') || (child instanceof window$5.HTMLInputElement || child instanceof window$5.HTMLSelectElement || child instanceof window$5.HTMLTextAreaElement || child instanceof window$5.HTMLButtonElement) && !child.hasAttribute('disabled') || child instanceof window$5.HTMLIFrameElement || child instanceof window$5.HTMLObjectElement || child instanceof window$5.HTMLEmbedElement || child.hasAttribute('tabindex') && child.getAttribute('tabindex') !== -1 || child.hasAttribute('contenteditable');
+        return (child instanceof window$3.HTMLAnchorElement || child instanceof window$3.HTMLAreaElement) && child.hasAttribute('href') || (child instanceof window$3.HTMLInputElement || child instanceof window$3.HTMLSelectElement || child instanceof window$3.HTMLTextAreaElement || child instanceof window$3.HTMLButtonElement) && !child.hasAttribute('disabled') || child instanceof window$3.HTMLIFrameElement || child instanceof window$3.HTMLObjectElement || child instanceof window$3.HTMLEmbedElement || child.hasAttribute('tabindex') && child.getAttribute('tabindex') !== -1 || child.hasAttribute('contenteditable');
       });
     };
 
@@ -7421,7 +7421,7 @@
     }
 
     if (!details.protocol) {
-      details.protocol = window$5.location.protocol;
+      details.protocol = window$3.location.protocol;
     }
 
     if (addToBody) {
@@ -7501,7 +7501,7 @@
 
   var isCrossOrigin = function isCrossOrigin(url, winLoc) {
     if (winLoc === void 0) {
-      winLoc = window$5.location;
+      winLoc = window$3.location;
     }
 
     var urlInfo = parseUrl(url); // IE8 protocol relative urls will return ':' for protocol
@@ -7565,8 +7565,8 @@
   var xhr = createXHR; // Allow use of default import syntax in TypeScript
 
   var default_1 = createXHR;
-  createXHR.XMLHttpRequest = window$5.XMLHttpRequest || noop;
-  createXHR.XDomainRequest = "withCredentials" in new createXHR.XMLHttpRequest() ? createXHR.XMLHttpRequest : window$5.XDomainRequest;
+  createXHR.XMLHttpRequest = window$3.XMLHttpRequest || noop;
+  createXHR.XDomainRequest = "withCredentials" in new createXHR.XMLHttpRequest() ? createXHR.XMLHttpRequest : window$3.XDomainRequest;
   forEachArray(["get", "put", "post", "patch", "head", "delete"], function (method) {
     createXHR[method === "delete" ? "del" : method] = function (uri, options, callback) {
       options = initParams(uri, options, callback);
@@ -7833,7 +7833,7 @@
    */
 
   var parseCues = function parseCues(srcContent, track) {
-    var parser = new window$5.WebVTT.Parser(window$5, window$5.vttjs, window$5.WebVTT.StringDecoder());
+    var parser = new window$3.WebVTT.Parser(window$3, window$3.vttjs, window$3.WebVTT.StringDecoder());
     var errors = [];
 
     parser.oncue = function (cue) {
@@ -7854,16 +7854,16 @@
     parser.parse(srcContent);
 
     if (errors.length > 0) {
-      if (window$5.console && window$5.console.groupCollapsed) {
-        window$5.console.groupCollapsed("Text Track parsing errors for " + track.src);
+      if (window$3.console && window$3.console.groupCollapsed) {
+        window$3.console.groupCollapsed("Text Track parsing errors for " + track.src);
       }
 
       errors.forEach(function (error) {
         return log.error(error);
       });
 
-      if (window$5.console && window$5.console.groupEnd) {
-        window$5.console.groupEnd();
+      if (window$3.console && window$3.console.groupEnd) {
+        window$3.console.groupEnd();
       }
     }
 
@@ -7900,7 +7900,7 @@
       track.loaded_ = true; // Make sure that vttjs has loaded, otherwise, wait till it finished loading
       // NOTE: this is only used for the alt/video.novtt.js build
 
-      if (typeof window$5.WebVTT !== 'function') {
+      if (typeof window$3.WebVTT !== 'function') {
         if (track.tech_) {
           // to prevent use before define eslint error, we define loadHandler
           // as a let here
@@ -8177,8 +8177,8 @@
     _proto.addCue = function addCue(originalCue) {
       var cue = originalCue;
 
-      if (window$5.vttjs && !(originalCue instanceof window$5.vttjs.VTTCue)) {
-        cue = new window$5.vttjs.VTTCue(originalCue.startTime, originalCue.endTime, originalCue.text);
+      if (window$3.vttjs && !(originalCue instanceof window$3.vttjs.VTTCue)) {
+        cue = new window$3.vttjs.VTTCue(originalCue.startTime, originalCue.endTime, originalCue.text);
 
         for (var prop in originalCue) {
           if (!(prop in cue)) {
@@ -10424,24 +10424,24 @@
       VTTCue: vttcue,
       VTTRegion: vttregion
     };
-    window$5.vttjs = vttjs;
-    window$5.WebVTT = vttjs.WebVTT;
+    window$3.vttjs = vttjs;
+    window$3.WebVTT = vttjs.WebVTT;
     var cueShim = vttjs.VTTCue;
     var regionShim = vttjs.VTTRegion;
-    var nativeVTTCue = window$5.VTTCue;
-    var nativeVTTRegion = window$5.VTTRegion;
+    var nativeVTTCue = window$3.VTTCue;
+    var nativeVTTRegion = window$3.VTTRegion;
 
     vttjs.shim = function () {
-      window$5.VTTCue = cueShim;
-      window$5.VTTRegion = regionShim;
+      window$3.VTTCue = cueShim;
+      window$3.VTTRegion = regionShim;
     };
 
     vttjs.restore = function () {
-      window$5.VTTCue = nativeVTTCue;
-      window$5.VTTRegion = nativeVTTRegion;
+      window$3.VTTCue = nativeVTTCue;
+      window$3.VTTRegion = nativeVTTRegion;
     };
 
-    if (!window$5.VTTCue) {
+    if (!window$3.VTTCue) {
       vttjs.shim();
     }
   });
@@ -11030,7 +11030,7 @@
     _proto.addWebVttScript_ = function addWebVttScript_() {
       var _this5 = this;
 
-      if (window$5.WebVTT) {
+      if (window$3.WebVTT) {
         return;
       } // Initially, Tech.el_ is a child of a dummy-div wait until the Component system
       // signals that the Tech is ready at which point Tech.el_ is part of the DOM
@@ -11077,7 +11077,7 @@
         }); // but have not loaded yet and we set it to true before the inject so that
         // we don't overwrite the injected window.WebVTT if it loads right away
 
-        window$5.WebVTT = true;
+        window$3.WebVTT = true;
         this.el().parentNode.appendChild(script);
       } else {
         this.ready(this.addWebVttScript_);
@@ -11292,7 +11292,7 @@
     ;
 
     _proto.requestPictureInPicture = function requestPictureInPicture() {
-      var PromiseClass = this.options_.Promise || window$5.Promise;
+      var PromiseClass = this.options_.Promise || window$3.Promise;
 
       if (PromiseClass) {
         return PromiseClass.reject();
@@ -11472,9 +11472,9 @@
 
       name = toTitleCase(name);
 
-      if (window$5 && window$5.videojs && window$5.videojs[name]) {
+      if (window$3 && window$3.videojs && window$3.videojs[name]) {
         log.warn("The " + name + " tech was added to the videojs object when it should be registered using videojs.registerTech(name, tech)");
-        return window$5.videojs[name];
+        return window$3.videojs[name];
       }
     };
 
@@ -12898,9 +12898,9 @@
 
         player.on('fullscreenchange', updateDisplayHandler);
         player.on('playerresize', updateDisplayHandler);
-        window$5.addEventListener('orientationchange', updateDisplayHandler);
+        window$3.addEventListener('orientationchange', updateDisplayHandler);
         player.on('dispose', function () {
-          return window$5.removeEventListener('orientationchange', updateDisplayHandler);
+          return window$3.removeEventListener('orientationchange', updateDisplayHandler);
         });
         var tracks = this.options_.playerOptions.tracks || [];
 
@@ -13011,8 +13011,8 @@
     ;
 
     _proto.clearDisplay = function clearDisplay() {
-      if (typeof window$5.WebVTT === 'function') {
-        window$5.WebVTT.processCues(window$5, [], this.el_);
+      if (typeof window$3.WebVTT === 'function') {
+        window$3.WebVTT.processCues(window$3, [], this.el_);
       }
     }
     /**
@@ -13138,7 +13138,7 @@
         }
 
         if (overrides.fontPercent && overrides.fontPercent !== 1) {
-          var fontSize = window$5.parseFloat(cueDiv.style.fontSize);
+          var fontSize = window$3.parseFloat(cueDiv.style.fontSize);
           cueDiv.style.fontSize = fontSize * overrides.fontPercent + 'px';
           cueDiv.style.height = 'auto';
           cueDiv.style.top = 'auto';
@@ -13167,7 +13167,7 @@
         tracks = [tracks];
       }
 
-      if (typeof window$5.WebVTT !== 'function' || tracks.every(function (track) {
+      if (typeof window$3.WebVTT !== 'function' || tracks.every(function (track) {
         return !track.activeCues;
       })) {
         return;
@@ -13184,7 +13184,7 @@
       } // removes all cues before it processes new ones
 
 
-      window$5.WebVTT.processCues(window$5, cues, this.el_); // add unique class to each language text track & add settings styling if necessary
+      window$3.WebVTT.processCues(window$3, cues, this.el_); // add unique class to each language text track & add settings styling if necessary
 
       for (var _i2 = 0; _i2 < tracks.length; ++_i2) {
         var _track2 = tracks[_i2];
@@ -18035,10 +18035,10 @@
         var event;
 
         _this.on(['tap', 'click'], function () {
-          if (typeof window$5.Event !== 'object') {
+          if (typeof window$3.Event !== 'object') {
             // Android 2.3 throws an Illegal Constructor error for window.Event
             try {
-              event = new window$5.Event('change');
+              event = new window$3.Event('change');
             } catch (err) {// continue regardless of error
             }
           }
@@ -20200,7 +20200,7 @@
       var values;
 
       try {
-        values = JSON.parse(window$5.localStorage.getItem(LOCAL_STORAGE_KEY));
+        values = JSON.parse(window$3.localStorage.getItem(LOCAL_STORAGE_KEY));
       } catch (err) {
         log.warn(err);
       }
@@ -20223,9 +20223,9 @@
 
       try {
         if (Object.keys(values).length) {
-          window$5.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+          window$3.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
         } else {
-          window$5.localStorage.removeItem(LOCAL_STORAGE_KEY);
+          window$3.localStorage.removeItem(LOCAL_STORAGE_KEY);
         }
       } catch (err) {
         log.warn(err);
@@ -20304,7 +20304,7 @@
     function ResizeManager(player, options) {
       var _this;
 
-      var RESIZE_OBSERVER_AVAILABLE = options.ResizeObserver || window$5.ResizeObserver; // if `null` was passed, we want to disable the ResizeObserver
+      var RESIZE_OBSERVER_AVAILABLE = options.ResizeObserver || window$3.ResizeObserver; // if `null` was passed, we want to disable the ResizeObserver
 
       if (options.ResizeObserver === null) {
         RESIZE_OBSERVER_AVAILABLE = false;
@@ -20316,7 +20316,7 @@
         reportTouchActivity: false
       }, options);
       _this = _Component.call(this, player, options_) || this;
-      _this.ResizeObserver = options.ResizeObserver || window$5.ResizeObserver;
+      _this.ResizeObserver = options.ResizeObserver || window$3.ResizeObserver;
       _this.loadListener_ = null;
       _this.resizeObserver_ = null;
       _this.debouncedHandler_ = debounce(function () {
@@ -20507,7 +20507,7 @@
         return;
       }
 
-      var newTime = Number(window$5.performance.now().toFixed(4));
+      var newTime = Number(window$3.performance.now().toFixed(4));
       var deltaTime = this.lastTime_ === -1 ? 0 : (newTime - this.lastTime_) / 1000;
       this.lastTime_ = newTime;
       this.pastSeekEnd_ = this.pastSeekEnd() + deltaTime;
@@ -20907,7 +20907,7 @@
       this.innerText = ''; // now we add all of that html in one by appending the
       // document fragment. This is how innerHTML does it.
 
-      window$5.Element.prototype.appendChild.call(this, docFrag); // then return the result that innerHTML's setter would
+      window$3.Element.prototype.appendChild.call(this, docFrag); // then return the result that innerHTML's setter would
 
       return this.innerHTML;
     }
@@ -20934,7 +20934,7 @@
   };
 
   var getInnerHTMLDescriptor = function getInnerHTMLDescriptor(tech) {
-    return getDescriptor([tech.el(), window$5.HTMLMediaElement.prototype, window$5.Element.prototype, innerHTMLDescriptorPolyfill], 'innerHTML');
+    return getDescriptor([tech.el(), window$3.HTMLMediaElement.prototype, window$3.Element.prototype, innerHTMLDescriptorPolyfill], 'innerHTML');
   };
   /**
    * Patches browser internal functions so that we can tell synchronously
@@ -21013,19 +21013,19 @@
   var srcDescriptorPolyfill = Object.defineProperty({}, 'src', {
     get: function get() {
       if (this.hasAttribute('src')) {
-        return getAbsoluteURL(window$5.Element.prototype.getAttribute.call(this, 'src'));
+        return getAbsoluteURL(window$3.Element.prototype.getAttribute.call(this, 'src'));
       }
 
       return '';
     },
     set: function set(v) {
-      window$5.Element.prototype.setAttribute.call(this, 'src', v);
+      window$3.Element.prototype.setAttribute.call(this, 'src', v);
       return v;
     }
   });
 
   var getSrcDescriptor = function getSrcDescriptor(tech) {
-    return getDescriptor([tech.el(), window$5.HTMLMediaElement.prototype, srcDescriptorPolyfill], 'src');
+    return getDescriptor([tech.el(), window$3.HTMLMediaElement.prototype, srcDescriptorPolyfill], 'src');
   };
   /**
    * setup `sourceset` handling on the `Html5` tech. This function
@@ -21785,7 +21785,7 @@
 
     _proto.supportsFullScreen = function supportsFullScreen() {
       if (typeof this.el_.webkitEnterFullScreen === 'function') {
-        var userAgent = window$5.navigator && window$5.navigator.userAgent || ''; // Seems to be broken in Chromium/Chrome && Safari in Leopard
+        var userAgent = window$3.navigator && window$3.navigator.userAgent || ''; // Seems to be broken in Chromium/Chrome && Safari in Leopard
 
         if (/Android/.test(userAgent) || !/Chrome|Mac OS X 10.5/.test(userAgent)) {
           return true;
@@ -22068,10 +22068,10 @@
         videoPlaybackQuality.totalVideoFrames = this.el().webkitDecodedFrameCount;
       }
 
-      if (window$5.performance && typeof window$5.performance.now === 'function') {
-        videoPlaybackQuality.creationTime = window$5.performance.now();
-      } else if (window$5.performance && window$5.performance.timing && typeof window$5.performance.timing.navigationStart === 'number') {
-        videoPlaybackQuality.creationTime = window$5.Date.now() - window$5.performance.timing.navigationStart;
+      if (window$3.performance && typeof window$3.performance.now === 'function') {
+        videoPlaybackQuality.creationTime = window$3.performance.now();
+      } else if (window$3.performance && window$3.performance.timing && typeof window$3.performance.timing.navigationStart === 'number') {
+        videoPlaybackQuality.creationTime = window$3.Date.now() - window$3.performance.timing.navigationStart;
       }
 
       return videoPlaybackQuality;
@@ -23782,7 +23782,7 @@
       // of the player in a way that's still overrideable by CSS, just like the
       // video element
 
-      if (window$5.VIDEOJS_NO_DYNAMIC_STYLE !== true) {
+      if (window$3.VIDEOJS_NO_DYNAMIC_STYLE !== true) {
         this.styleEl_ = createStyleElement('vjs-styles-dimensions');
         var defaultsStyleEl = $('.vjs-styles-defaults');
         var head = $('head');
@@ -24046,7 +24046,7 @@
     ;
 
     _proto.updateStyleEl_ = function updateStyleEl_() {
-      if (window$5.VIDEOJS_NO_DYNAMIC_STYLE === true) {
+      if (window$3.VIDEOJS_NO_DYNAMIC_STYLE === true) {
         var _width = typeof this.width_ === 'number' ? this.width_ : this.options_.width;
 
         var _height = typeof this.height_ === 'number' ? this.height_ : this.options_.height;
@@ -25377,7 +25377,7 @@
     _proto.play = function play() {
       var _this8 = this;
 
-      var PromiseClass = this.options_.Promise || window$5.Promise;
+      var PromiseClass = this.options_.Promise || window$3.Promise;
 
       if (PromiseClass) {
         return new PromiseClass(function (resolve) {
@@ -25897,7 +25897,7 @@
     ;
 
     _proto.requestFullscreen = function requestFullscreen(fullscreenOptions) {
-      var PromiseClass = this.options_.Promise || window$5.Promise;
+      var PromiseClass = this.options_.Promise || window$3.Promise;
 
       if (PromiseClass) {
         var self = this;
@@ -25982,7 +25982,7 @@
     ;
 
     _proto.exitFullscreen = function exitFullscreen() {
-      var PromiseClass = this.options_.Promise || window$5.Promise;
+      var PromiseClass = this.options_.Promise || window$3.Promise;
 
       if (PromiseClass) {
         var self = this;
@@ -26549,7 +26549,7 @@
     _proto.reset = function reset() {
       var _this15 = this;
 
-      var PromiseClass = this.options_.Promise || window$5.Promise;
+      var PromiseClass = this.options_.Promise || window$3.Promise;
 
       if (this.paused() || !PromiseClass) {
         this.doReset_();
@@ -27976,7 +27976,7 @@
    */
 
   Player.players = {};
-  var navigator = window$5.navigator;
+  var navigator = window$3.navigator;
   /*
    * Player instance options, surfaced using options
    * options = Player.prototype.options_
@@ -29069,7 +29069,7 @@
   }; // Add default styles
 
 
-  if (window$5.VIDEOJS_NO_DYNAMIC_STYLE !== true && isReal()) {
+  if (window$3.VIDEOJS_NO_DYNAMIC_STYLE !== true && isReal()) {
     var style = $('.vjs-styles-defaults');
 
     if (!style) {
@@ -29352,32 +29352,18 @@
   videojs$1.url = Url;
   videojs$1.defineLazyProperty = defineLazyProperty;
 
-  function _assertThisInitialized$1(self) {
-    if (self === void 0) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return self;
-  }
-
-  var assertThisInitialized$1 = _assertThisInitialized$1;
-
-  function _inheritsLoose$1(subClass, superClass) {
-    subClass.prototype = Object.create(superClass.prototype);
-    subClass.prototype.constructor = subClass;
-    subClass.__proto__ = superClass;
-  }
-
-  var inheritsLoose$1 = _inheritsLoose$1;
-
   var urlToolkit = createCommonjsModule(function (module, exports) {
     // see https://tools.ietf.org/html/rfc1808
+
+    /* jshint ignore:start */
     (function (root) {
-      var URL_REGEX = /^((?:[a-zA-Z0-9+\-.]+:)?)(\/\/[^\/?#]*)?((?:[^\/?#]*\/)*[^;?#]*)?(;[^?#]*)?(\?[^#]*)?(#.*)?$/;
+      /* jshint ignore:end */
+      var URL_REGEX = /^((?:[a-zA-Z0-9+\-.]+:)?)(\/\/[^\/?#]*)?((?:[^\/\?#]*\/)*.*?)??(;.*?)?(\?.*?)?(#.*?)?$/;
       var FIRST_SEGMENT_REGEX = /^([^\/?#]*)(.*)$/;
       var SLASH_DOT_REGEX = /(?:\/|^)\.(?=\/)/g;
-      var SLASH_DOT_DOT_REGEX = /(?:\/|^)\.\.\/(?!\.\.\/)[^\/]*(?=\/)/g;
+      var SLASH_DOT_DOT_REGEX = /(?:\/|^)\.\.\/(?!\.\.\/).*?(?=\/)/g;
       var URLToolkit = {
+        // jshint ignore:line
         // If opts.alwaysNormalize is true then the path will always be normalized even when it starts with / or //
         // E.g
         // With opts.alwaysNormalize = false (default, spec compliant)
@@ -29528,7 +29514,8 @@
           // complete path segment not equal to "..", that
           // "<segment>/.." is removed.
 
-          while (path.length !== (path = path.replace(SLASH_DOT_DOT_REGEX, '')).length) {}
+          while (path.length !== (path = path.replace(SLASH_DOT_DOT_REGEX, '')).length) {} // jshint ignore:line
+
 
           return path.split('').reverse().join('');
         },
@@ -29536,8 +29523,12 @@
           return parts.scheme + parts.netLoc + parts.path + parts.params + parts.query + parts.fragment;
         }
       };
+      /* jshint ignore:start */
+
       module.exports = URLToolkit;
     })();
+    /* jshint ignore:end */
+
   });
 
   function _interopDefault(ex) {
@@ -29546,7 +29537,7 @@
 
   var URLToolkit = _interopDefault(urlToolkit);
 
-  var window$1 = _interopDefault(window$5);
+  var window$1 = _interopDefault(window$3);
 
   var resolveUrl = function resolveUrl(baseUrl, relativeUrl) {
     // return early if we don't need to resolve
@@ -29688,33 +29679,11 @@
 
   var stream = Stream;
 
-  var _extends_1$1 = createCommonjsModule(function (module) {
-    function _extends() {
-      module.exports = _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
-      return _extends.apply(this, arguments);
-    }
-
-    module.exports = _extends;
-  });
-
   function _interopDefault$1(ex) {
     return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
   }
 
-  var window$2 = _interopDefault$1(window$5);
+  var window$2 = _interopDefault$1(window$3);
 
   var atob = function atob(s) {
     return window$2.atob ? window$2.atob(s) : Buffer.from(s, 'base64').toString('binary');
@@ -29743,7 +29712,7 @@
    */
 
   var LineStream = /*#__PURE__*/function (_Stream) {
-    inheritsLoose$1(LineStream, _Stream);
+    inheritsLoose(LineStream, _Stream);
 
     function LineStream() {
       var _this;
@@ -29847,7 +29816,7 @@
 
 
   var ParseStream = /*#__PURE__*/function (_Stream) {
-    inheritsLoose$1(ParseStream, _Stream);
+    inheritsLoose(ParseStream, _Stream);
 
     function ParseStream() {
       var _this;
@@ -30428,7 +30397,7 @@
 
 
   var Parser = /*#__PURE__*/function (_Stream) {
-    inheritsLoose$1(Parser, _Stream);
+    inheritsLoose(Parser, _Stream);
 
     function Parser() {
       var _this;
@@ -30441,7 +30410,7 @@
       /* eslint-disable consistent-this */
 
 
-      var self = assertThisInitialized$1(_this);
+      var self = assertThisInitialized(_this);
       /* eslint-enable consistent-this */
 
 
@@ -30695,7 +30664,7 @@
                   currentUri.attributes = {};
                 }
 
-                _extends_1$1(currentUri.attributes, entry.attributes);
+                _extends_1(currentUri.attributes, entry.attributes);
               },
               media: function media() {
                 this.manifest.mediaGroups = this.manifest.mediaGroups || defaultMediaGroups;
@@ -30948,223 +30917,6 @@
   });
   unwrapExports(mediaTypes);
   var mediaTypes_1 = mediaTypes.simpleTypeFromSourceType;
-
-  var urlToolkit$1 = createCommonjsModule(function (module, exports) {
-    // see https://tools.ietf.org/html/rfc1808
-    (function (root) {
-      var URL_REGEX = /^((?:[a-zA-Z0-9+\-.]+:)?)(\/\/[^\/?#]*)?((?:[^\/?#]*\/)*[^;?#]*)?(;[^?#]*)?(\?[^#]*)?(#.*)?$/;
-      var FIRST_SEGMENT_REGEX = /^([^\/?#]*)(.*)$/;
-      var SLASH_DOT_REGEX = /(?:\/|^)\.(?=\/)/g;
-      var SLASH_DOT_DOT_REGEX = /(?:\/|^)\.\.\/(?!\.\.\/)[^\/]*(?=\/)/g;
-      var URLToolkit = {
-        // If opts.alwaysNormalize is true then the path will always be normalized even when it starts with / or //
-        // E.g
-        // With opts.alwaysNormalize = false (default, spec compliant)
-        // http://a.com/b/cd + /e/f/../g => http://a.com/e/f/../g
-        // With opts.alwaysNormalize = true (not spec compliant)
-        // http://a.com/b/cd + /e/f/../g => http://a.com/e/g
-        buildAbsoluteURL: function buildAbsoluteURL(baseURL, relativeURL, opts) {
-          opts = opts || {}; // remove any remaining space and CRLF
-
-          baseURL = baseURL.trim();
-          relativeURL = relativeURL.trim();
-
-          if (!relativeURL) {
-            // 2a) If the embedded URL is entirely empty, it inherits the
-            // entire base URL (i.e., is set equal to the base URL)
-            // and we are done.
-            if (!opts.alwaysNormalize) {
-              return baseURL;
-            }
-
-            var basePartsForNormalise = URLToolkit.parseURL(baseURL);
-
-            if (!basePartsForNormalise) {
-              throw new Error('Error trying to parse base URL.');
-            }
-
-            basePartsForNormalise.path = URLToolkit.normalizePath(basePartsForNormalise.path);
-            return URLToolkit.buildURLFromParts(basePartsForNormalise);
-          }
-
-          var relativeParts = URLToolkit.parseURL(relativeURL);
-
-          if (!relativeParts) {
-            throw new Error('Error trying to parse relative URL.');
-          }
-
-          if (relativeParts.scheme) {
-            // 2b) If the embedded URL starts with a scheme name, it is
-            // interpreted as an absolute URL and we are done.
-            if (!opts.alwaysNormalize) {
-              return relativeURL;
-            }
-
-            relativeParts.path = URLToolkit.normalizePath(relativeParts.path);
-            return URLToolkit.buildURLFromParts(relativeParts);
-          }
-
-          var baseParts = URLToolkit.parseURL(baseURL);
-
-          if (!baseParts) {
-            throw new Error('Error trying to parse base URL.');
-          }
-
-          if (!baseParts.netLoc && baseParts.path && baseParts.path[0] !== '/') {
-            // If netLoc missing and path doesn't start with '/', assume everthing before the first '/' is the netLoc
-            // This causes 'example.com/a' to be handled as '//example.com/a' instead of '/example.com/a'
-            var pathParts = FIRST_SEGMENT_REGEX.exec(baseParts.path);
-            baseParts.netLoc = pathParts[1];
-            baseParts.path = pathParts[2];
-          }
-
-          if (baseParts.netLoc && !baseParts.path) {
-            baseParts.path = '/';
-          }
-
-          var builtParts = {
-            // 2c) Otherwise, the embedded URL inherits the scheme of
-            // the base URL.
-            scheme: baseParts.scheme,
-            netLoc: relativeParts.netLoc,
-            path: null,
-            params: relativeParts.params,
-            query: relativeParts.query,
-            fragment: relativeParts.fragment
-          };
-
-          if (!relativeParts.netLoc) {
-            // 3) If the embedded URL's <net_loc> is non-empty, we skip to
-            // Step 7.  Otherwise, the embedded URL inherits the <net_loc>
-            // (if any) of the base URL.
-            builtParts.netLoc = baseParts.netLoc; // 4) If the embedded URL path is preceded by a slash "/", the
-            // path is not relative and we skip to Step 7.
-
-            if (relativeParts.path[0] !== '/') {
-              if (!relativeParts.path) {
-                // 5) If the embedded URL path is empty (and not preceded by a
-                // slash), then the embedded URL inherits the base URL path
-                builtParts.path = baseParts.path; // 5a) if the embedded URL's <params> is non-empty, we skip to
-                // step 7; otherwise, it inherits the <params> of the base
-                // URL (if any) and
-
-                if (!relativeParts.params) {
-                  builtParts.params = baseParts.params; // 5b) if the embedded URL's <query> is non-empty, we skip to
-                  // step 7; otherwise, it inherits the <query> of the base
-                  // URL (if any) and we skip to step 7.
-
-                  if (!relativeParts.query) {
-                    builtParts.query = baseParts.query;
-                  }
-                }
-              } else {
-                // 6) The last segment of the base URL's path (anything
-                // following the rightmost slash "/", or the entire path if no
-                // slash is present) is removed and the embedded URL's path is
-                // appended in its place.
-                var baseURLPath = baseParts.path;
-                var newPath = baseURLPath.substring(0, baseURLPath.lastIndexOf('/') + 1) + relativeParts.path;
-                builtParts.path = URLToolkit.normalizePath(newPath);
-              }
-            }
-          }
-
-          if (builtParts.path === null) {
-            builtParts.path = opts.alwaysNormalize ? URLToolkit.normalizePath(relativeParts.path) : relativeParts.path;
-          }
-
-          return URLToolkit.buildURLFromParts(builtParts);
-        },
-        parseURL: function parseURL(url) {
-          var parts = URL_REGEX.exec(url);
-
-          if (!parts) {
-            return null;
-          }
-
-          return {
-            scheme: parts[1] || '',
-            netLoc: parts[2] || '',
-            path: parts[3] || '',
-            params: parts[4] || '',
-            query: parts[5] || '',
-            fragment: parts[6] || ''
-          };
-        },
-        normalizePath: function normalizePath(path) {
-          // The following operations are
-          // then applied, in order, to the new path:
-          // 6a) All occurrences of "./", where "." is a complete path
-          // segment, are removed.
-          // 6b) If the path ends with "." as a complete path segment,
-          // that "." is removed.
-          path = path.split('').reverse().join('').replace(SLASH_DOT_REGEX, ''); // 6c) All occurrences of "<segment>/../", where <segment> is a
-          // complete path segment not equal to "..", are removed.
-          // Removal of these path segments is performed iteratively,
-          // removing the leftmost matching pattern on each iteration,
-          // until no matching pattern remains.
-          // 6d) If the path ends with "<segment>/..", where <segment> is a
-          // complete path segment not equal to "..", that
-          // "<segment>/.." is removed.
-
-          while (path.length !== (path = path.replace(SLASH_DOT_DOT_REGEX, '')).length) {}
-
-          return path.split('').reverse().join('');
-        },
-        buildURLFromParts: function buildURLFromParts(parts) {
-          return parts.scheme + parts.netLoc + parts.path + parts.params + parts.query + parts.fragment;
-        }
-      };
-      module.exports = URLToolkit;
-    })();
-  });
-
-  function _interopDefault$2(ex) {
-    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-  }
-
-  var URLToolkit$1 = _interopDefault$2(urlToolkit$1);
-
-  var window$3 = _interopDefault$2(window$5);
-
-  var resolveUrl$1 = function resolveUrl(baseUrl, relativeUrl) {
-    // return early if we don't need to resolve
-    if (/^[a-z]+:/i.test(relativeUrl)) {
-      return relativeUrl;
-    } // if the base URL is relative then combine with the current location
-
-
-    if (!/\/\//i.test(baseUrl)) {
-      baseUrl = URLToolkit$1.buildAbsoluteURL(window$3.location && window$3.location.href || '', baseUrl);
-    }
-
-    return URLToolkit$1.buildAbsoluteURL(baseUrl, relativeUrl);
-  };
-
-  var resolveUrl_1$1 = resolveUrl$1;
-
-  function _interopDefault$3(ex) {
-    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-  }
-
-  var window$4 = _interopDefault$3(window$5);
-
-  var atob$1 = function atob(s) {
-    return window$4.atob ? window$4.atob(s) : Buffer.from(s, 'base64').toString('binary');
-  };
-
-  function decodeB64ToUint8Array$1(b64Text) {
-    var decodedString = atob$1(b64Text);
-    var array = new Uint8Array(decodedString.length);
-
-    for (var i = 0; i < decodedString.length; i++) {
-      array[i] = decodedString.charCodeAt(i);
-    }
-
-    return array;
-  }
-
-  var decodeB64ToUint8Array_1$1 = decodeB64ToUint8Array$1;
 
   //[4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
   //[4a]   	NameChar	   ::=   	NameStartChar | "-" | "." | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
@@ -33652,6 +33404,80 @@
   var domParser_3 = domParser.DOMParser;
 
   /*! @name mpd-parser @version 0.15.0 @license Apache-2.0 */
+
+  var isObject$1 = function isObject(obj) {
+    return !!obj && typeof obj === 'object';
+  };
+
+  var merge = function merge() {
+    for (var _len = arguments.length, objects = new Array(_len), _key = 0; _key < _len; _key++) {
+      objects[_key] = arguments[_key];
+    }
+
+    return objects.reduce(function (result, source) {
+      if (typeof source !== 'object') {
+        return result;
+      }
+
+      Object.keys(source).forEach(function (key) {
+        if (Array.isArray(result[key]) && Array.isArray(source[key])) {
+          result[key] = result[key].concat(source[key]);
+        } else if (isObject$1(result[key]) && isObject$1(source[key])) {
+          result[key] = merge(result[key], source[key]);
+        } else {
+          result[key] = source[key];
+        }
+      });
+      return result;
+    }, {});
+  };
+
+  var values = function values(o) {
+    return Object.keys(o).map(function (k) {
+      return o[k];
+    });
+  };
+
+  var range = function range(start, end) {
+    var result = [];
+
+    for (var i = start; i < end; i++) {
+      result.push(i);
+    }
+
+    return result;
+  };
+
+  var flatten = function flatten(lists) {
+    return lists.reduce(function (x, y) {
+      return x.concat(y);
+    }, []);
+  };
+
+  var from = function from(list) {
+    if (!list.length) {
+      return [];
+    }
+
+    var result = [];
+
+    for (var i = 0; i < list.length; i++) {
+      result.push(list[i]);
+    }
+
+    return result;
+  };
+
+  var findIndexes = function findIndexes(l, key) {
+    return l.reduce(function (a, e, i) {
+      if (e[key]) {
+        a.push(i);
+      }
+
+      return a;
+    }, []);
+  };
+
   var errors = {
     INVALID_NUMBER_OF_PERIOD: 'INVALID_NUMBER_OF_PERIOD',
     DASH_EMPTY_MANIFEST: 'DASH_EMPTY_MANIFEST',
@@ -33698,7 +33524,7 @@
         indexRange = _ref$indexRange === void 0 ? '' : _ref$indexRange;
     var segment = {
       uri: source,
-      resolvedUri: resolveUrl_1$1(baseUrl || '', source)
+      resolvedUri: resolveUrl_1(baseUrl || '', source)
     };
 
     if (range || indexRange) {
@@ -33722,46 +33548,6 @@
     // header uses inclusive ranges
     var endRange = byterange.offset + byterange.length - 1;
     return byterange.offset + "-" + endRange;
-  };
-
-  var range = function range(start, end) {
-    var result = [];
-
-    for (var i = start; i < end; i++) {
-      result.push(i);
-    }
-
-    return result;
-  };
-
-  var flatten = function flatten(lists) {
-    return lists.reduce(function (x, y) {
-      return x.concat(y);
-    }, []);
-  };
-
-  var from = function from(list) {
-    if (!list.length) {
-      return [];
-    }
-
-    var result = [];
-
-    for (var i = 0; i < list.length; i++) {
-      result.push(list[i]);
-    }
-
-    return result;
-  };
-
-  var findIndexes = function findIndexes(l, key) {
-    return l.reduce(function (a, e, i) {
-      if (e[key]) {
-        a.push(i);
-      }
-
-      return a;
-    }, []);
   };
   /**
    * Functions for calculating the range of available segments in static and dynamic
@@ -34015,39 +33801,6 @@
 
     playlist.segments = segments;
     return playlist;
-  };
-
-  var isObject$1 = function isObject(obj) {
-    return !!obj && typeof obj === 'object';
-  };
-
-  var merge = function merge() {
-    for (var _len = arguments.length, objects = new Array(_len), _key = 0; _key < _len; _key++) {
-      objects[_key] = arguments[_key];
-    }
-
-    return objects.reduce(function (result, source) {
-      if (typeof source !== 'object') {
-        return result;
-      }
-
-      Object.keys(source).forEach(function (key) {
-        if (Array.isArray(result[key]) && Array.isArray(source[key])) {
-          result[key] = result[key].concat(source[key]);
-        } else if (isObject$1(result[key]) && isObject$1(source[key])) {
-          result[key] = merge(result[key], source[key]);
-        } else {
-          result[key] = source[key];
-        }
-      });
-      return result;
-    }, {});
-  };
-
-  var values = function values(o) {
-    return Object.keys(o).map(function (k) {
-      return o[k];
-    });
   };
 
   var mergeDiscontiguousPlaylists = function mergeDiscontiguousPlaylists(playlists) {
@@ -34663,7 +34416,7 @@
         uri: uri,
         timeline: segment.timeline,
         duration: segment.duration,
-        resolvedUri: resolveUrl_1$1(attributes.baseUrl || '', uri),
+        resolvedUri: resolveUrl_1(attributes.baseUrl || '', uri),
         map: mapSegment,
         number: segment.number
       };
@@ -34812,6 +34565,17 @@
 
   var toPlaylists = function toPlaylists(representations) {
     return representations.map(generateSegments);
+  };
+
+  var findChildren = function findChildren(element, name) {
+    return from(element.childNodes).filter(function (_ref) {
+      var tagName = _ref.tagName;
+      return tagName === name;
+    });
+  };
+
+  var getContent = function getContent(element) {
+    return element.textContent.trim();
   };
 
   var parseDuration = function parseDuration(str) {
@@ -35100,17 +34864,6 @@
     }, {});
   };
 
-  var findChildren = function findChildren(element, name) {
-    return from(element.childNodes).filter(function (_ref) {
-      var tagName = _ref.tagName;
-      return tagName === name;
-    });
-  };
-
-  var getContent = function getContent(element) {
-    return element.textContent.trim();
-  };
-
   var keySystemsMap = {
     'urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b': 'org.w3.clearkey',
     'urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed': 'com.widevine.alpha',
@@ -35135,7 +34888,7 @@
 
     return flatten(referenceUrls.map(function (reference) {
       return baseUrlElements.map(function (baseUrlElement) {
-        return resolveUrl_1$1(reference, getContent(baseUrlElement));
+        return resolveUrl_1(reference, getContent(baseUrlElement));
       });
     }));
   };
@@ -35291,7 +35044,7 @@
 
         if (psshNode) {
           var pssh = getContent(psshNode);
-          var psshBuffer = pssh && decodeB64ToUint8Array_1$1(pssh);
+          var psshBuffer = pssh && decodeB64ToUint8Array_1(pssh);
           acc[keySystem].pssh = psshBuffer;
         }
       }
@@ -35390,7 +35143,7 @@
       var periodAtt = parseAttributes$1(period);
       var parsedPeriodId = parseInt(periodAtt.id, 10); // fallback to mapping index if Period@id is not a number
 
-      var periodIndex = window$5.isNaN(parsedPeriodId) ? index : parsedPeriodId;
+      var periodIndex = window$3.isNaN(parsedPeriodId) ? index : parsedPeriodId;
       var periodAttributes = merge(mpdAttributes, {
         periodIndex: periodIndex
       });
@@ -37724,7 +37477,7 @@
       return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
     }
 
-    var window = _interopDefault(window$5);
+    var window = _interopDefault(window$3);
 
     var regexs = {
       // to determine mime types
@@ -38024,7 +37777,7 @@
    * @file resolve-url.js - Handling how URLs are resolved and manipulated
    */
 
-  var resolveUrl$2 = resolveUrl_1;
+  var resolveUrl$1 = resolveUrl_1;
   /**
    * Checks whether xhr request was redirected and returns correct url depending
    * on `handleManifestRedirects` option
@@ -38162,7 +37915,7 @@
         playlist: playlist,
         id: createPlaylistID(i, playlist.uri)
       });
-      playlist.resolvedUri = resolveUrl$2(master.uri, playlist.uri);
+      playlist.resolvedUri = resolveUrl$1(master.uri, playlist.uri);
       master.playlists[playlist.id] = playlist; // URI reference added for backwards compatibility
 
       master.playlists[playlist.uri] = playlist; // Although the spec states an #EXT-X-STREAM-INF tag MUST have a BANDWIDTH attribute,
@@ -38186,7 +37939,7 @@
   var resolveMediaGroupUris = function resolveMediaGroupUris(master) {
     forEachMediaGroup(master, function (properties) {
       if (properties.uri) {
-        properties.resolvedUri = resolveUrl$2(master.uri, properties.uri);
+        properties.resolvedUri = resolveUrl$1(master.uri, properties.uri);
       }
     });
   };
@@ -38212,8 +37965,8 @@
         'CLOSED-CAPTIONS': {},
         'SUBTITLES': {}
       },
-      uri: window$5.location.href,
-      resolvedUri: window$5.location.href,
+      uri: window$3.location.href,
+      resolvedUri: window$3.location.href,
       playlists: [{
         uri: uri,
         id: id,
@@ -38304,15 +38057,15 @@
 
   var resolveSegmentUris = function resolveSegmentUris(segment, baseUri) {
     if (!segment.resolvedUri) {
-      segment.resolvedUri = resolveUrl$2(baseUri, segment.uri);
+      segment.resolvedUri = resolveUrl$1(baseUri, segment.uri);
     }
 
     if (segment.key && !segment.key.resolvedUri) {
-      segment.key.resolvedUri = resolveUrl$2(baseUri, segment.key.uri);
+      segment.key.resolvedUri = resolveUrl$1(baseUri, segment.key.uri);
     }
 
     if (segment.map && !segment.map.resolvedUri) {
-      segment.map.resolvedUri = resolveUrl$2(baseUri, segment.map.uri);
+      segment.map.resolvedUri = resolveUrl$1(baseUri, segment.map.uri);
     }
   };
   /**
@@ -38405,7 +38158,7 @@
 
 
   var PlaylistLoader = /*#__PURE__*/function (_EventTarget) {
-    inheritsLoose$1(PlaylistLoader, _EventTarget);
+    inheritsLoose(PlaylistLoader, _EventTarget);
 
     function PlaylistLoader(src, vhs, options) {
       var _this;
@@ -38443,7 +38196,7 @@
 
         _this.state = 'HAVE_CURRENT_METADATA';
         _this.request = _this.vhs_.xhr({
-          uri: resolveUrl$2(_this.master.uri, _this.media().uri),
+          uri: resolveUrl$1(_this.master.uri, _this.media().uri),
           withCredentials: _this.withCredentials
         }, function (error, req) {
           // disposed
@@ -38534,8 +38287,8 @@
 
 
       if (!this.media().endList) {
-        window$5.clearTimeout(this.mediaUpdateTimeout);
-        this.mediaUpdateTimeout = window$5.setTimeout(function () {
+        window$3.clearTimeout(this.mediaUpdateTimeout);
+        this.mediaUpdateTimeout = window$3.setTimeout(function () {
           _this2.trigger('mediaupdatetimeout');
         }, refreshDelay(this.media(), !!update));
       }
@@ -38550,8 +38303,8 @@
     _proto.dispose = function dispose() {
       this.trigger('dispose');
       this.stopRequest();
-      window$5.clearTimeout(this.mediaUpdateTimeout);
-      window$5.clearTimeout(this.finalRenditionTimeout);
+      window$3.clearTimeout(this.mediaUpdateTimeout);
+      window$3.clearTimeout(this.finalRenditionTimeout);
       this.off();
     };
 
@@ -38602,11 +38355,11 @@
         playlist = this.master.playlists[playlist];
       }
 
-      window$5.clearTimeout(this.finalRenditionTimeout);
+      window$3.clearTimeout(this.finalRenditionTimeout);
 
       if (isFinalRendition) {
         var delay = playlist.targetDuration / 2 * 1000 || 5 * 1000;
-        this.finalRenditionTimeout = window$5.setTimeout(this.media.bind(this, playlist, false), delay);
+        this.finalRenditionTimeout = window$3.setTimeout(this.media.bind(this, playlist, false), delay);
         return;
       }
 
@@ -38704,7 +38457,7 @@
 
     _proto.pause = function pause() {
       this.stopRequest();
-      window$5.clearTimeout(this.mediaUpdateTimeout);
+      window$3.clearTimeout(this.mediaUpdateTimeout);
 
       if (this.state === 'HAVE_NOTHING') {
         // If we pause the loader before any data has been retrieved, its as if we never
@@ -38734,12 +38487,12 @@
     _proto.load = function load(isFinalRendition) {
       var _this4 = this;
 
-      window$5.clearTimeout(this.mediaUpdateTimeout);
+      window$3.clearTimeout(this.mediaUpdateTimeout);
       var media = this.media();
 
       if (isFinalRendition) {
         var delay = media ? media.targetDuration / 2 * 1000 : 5 * 1000;
-        this.mediaUpdateTimeout = window$5.setTimeout(function () {
+        this.mediaUpdateTimeout = window$3.setTimeout(function () {
           return _this4.load();
         }, delay);
         return;
@@ -38770,7 +38523,7 @@
         // in the case of an entirely constructed manifest object (meaning there's no actual
         // manifest on a server), default the uri to the page's href
         if (!this.src.uri) {
-          this.src.uri = window$5.location.href;
+          this.src.uri = window$3.location.href;
         } // resolvedUri is added on internally after the initial request. Since there's no
         // request for pre-resolved manifests, add on resolvedUri here.
 
@@ -38884,7 +38637,7 @@
       // default used.
 
 
-      var uri = this.srcUri() || window$5.location.href;
+      var uri = this.srcUri() || window$3.location.href;
       this.master = masterForMedia(manifest, uri);
       this.haveMetadata({
         playlistObject: manifest,
@@ -39355,7 +39108,7 @@
 
 
       if (!playlist.endList) {
-        return window$5.Infinity;
+        return window$3.Infinity;
       }
     } // calculate the total duration based on the segment durations
 
@@ -40621,7 +40374,7 @@
   };
 
   var DashPlaylistLoader = /*#__PURE__*/function (_EventTarget) {
-    inheritsLoose$1(DashPlaylistLoader, _EventTarget); // DashPlaylistLoader must accept either a src url or a playlist because subsequent
+    inheritsLoose(DashPlaylistLoader, _EventTarget); // DashPlaylistLoader must accept either a src url or a playlist because subsequent
     // playlist loader setups from media groups will expect to be able to pass a playlist
     // (since there aren't external URLs to media playlists with DASH)
 
@@ -40634,7 +40387,7 @@
       }
 
       _this = _EventTarget.call(this) || this;
-      _this.masterPlaylistLoader_ = masterPlaylistLoader || assertThisInitialized$1(_this);
+      _this.masterPlaylistLoader_ = masterPlaylistLoader || assertThisInitialized(_this);
 
       if (!masterPlaylistLoader) {
         _this.isMaster_ = true;
@@ -40722,7 +40475,7 @@
 
       if (!playlist.sidx || !sidxKey || this.masterPlaylistLoader_.sidxMapping_[sidxKey]) {
         // keep this function async
-        this.mediaRequest_ = window$5.setTimeout(function () {
+        this.mediaRequest_ = window$3.setTimeout(function () {
           return cb(false);
         }, 0);
         return;
@@ -40794,9 +40547,9 @@
       this.trigger('dispose');
       this.stopRequest();
       this.loadedPlaylists_ = {};
-      window$5.clearTimeout(this.minimumUpdatePeriodTimeout_);
-      window$5.clearTimeout(this.mediaRequest_);
-      window$5.clearTimeout(this.mediaUpdateTimeout);
+      window$3.clearTimeout(this.minimumUpdatePeriodTimeout_);
+      window$3.clearTimeout(this.mediaRequest_);
+      window$3.clearTimeout(this.mediaUpdateTimeout);
       this.off();
     };
 
@@ -40889,8 +40642,8 @@
 
     _proto.pause = function pause() {
       this.stopRequest();
-      window$5.clearTimeout(this.mediaUpdateTimeout);
-      window$5.clearTimeout(this.minimumUpdatePeriodTimeout_);
+      window$3.clearTimeout(this.mediaUpdateTimeout);
+      window$3.clearTimeout(this.minimumUpdatePeriodTimeout_);
 
       if (this.state === 'HAVE_NOTHING') {
         // If we pause the loader before any data has been retrieved, its as if we never
@@ -40902,13 +40655,13 @@
     _proto.load = function load(isFinalRendition) {
       var _this4 = this;
 
-      window$5.clearTimeout(this.mediaUpdateTimeout);
-      window$5.clearTimeout(this.minimumUpdatePeriodTimeout_);
+      window$3.clearTimeout(this.mediaUpdateTimeout);
+      window$3.clearTimeout(this.minimumUpdatePeriodTimeout_);
       var media = this.media();
 
       if (isFinalRendition) {
         var delay = media ? media.targetDuration / 2 * 1000 : 5 * 1000;
-        this.mediaUpdateTimeout = window$5.setTimeout(function () {
+        this.mediaUpdateTimeout = window$3.setTimeout(function () {
           return _this4.load();
         }, delay);
         return;
@@ -40935,7 +40688,7 @@
       // Call this asynchronously to match the xhr request behavior below
 
       if (!this.isMaster_) {
-        this.mediaRequest_ = window$5.setTimeout(function () {
+        this.mediaRequest_ = window$3.setTimeout(function () {
           return _this5.haveMaster_();
         }, 0);
         return;
@@ -41015,7 +40768,7 @@
       }
 
       this.request = this.vhs_.xhr({
-        uri: resolveUrl$2(this.masterPlaylistLoader_.srcUrl, utcTiming.value),
+        uri: resolveUrl$1(this.masterPlaylistLoader_.srcUrl, utcTiming.value),
         method: utcTiming.method,
         withCredentials: this.withCredentials
       }, function (error, req) {
@@ -41100,10 +40853,10 @@
       var _this8 = this; // Clear existing timeout
 
 
-      window$5.clearTimeout(this.minimumUpdatePeriodTimeout_);
+      window$3.clearTimeout(this.minimumUpdatePeriodTimeout_);
 
       var createMUPTimeout = function createMUPTimeout(mup) {
-        _this8.minimumUpdatePeriodTimeout_ = window$5.setTimeout(function () {
+        _this8.minimumUpdatePeriodTimeout_ = window$3.setTimeout(function () {
           _this8.trigger('minimumUpdatePeriod');
 
           createMUPTimeout(mup);
@@ -41188,7 +40941,7 @@
       }
 
       if (!this.media().endList) {
-        this.mediaUpdateTimeout = window$5.setTimeout(function () {
+        this.mediaUpdateTimeout = window$3.setTimeout(function () {
           _this10.trigger('mediaupdatetimeout');
         }, refreshDelay(this.media(), Boolean(mediaChanged)));
       }
@@ -50722,7 +50475,7 @@
       return '';
     }
 
-    var result = window$5.getComputedStyle(el);
+    var result = window$3.getComputedStyle(el);
 
     if (!result) {
       return '';
@@ -50771,13 +50524,13 @@
       leftBandwidth = left.attributes.BANDWIDTH;
     }
 
-    leftBandwidth = leftBandwidth || window$5.Number.MAX_VALUE;
+    leftBandwidth = leftBandwidth || window$3.Number.MAX_VALUE;
 
     if (right.attributes.BANDWIDTH) {
       rightBandwidth = right.attributes.BANDWIDTH;
     }
 
-    rightBandwidth = rightBandwidth || window$5.Number.MAX_VALUE;
+    rightBandwidth = rightBandwidth || window$3.Number.MAX_VALUE;
     return leftBandwidth - rightBandwidth;
   };
   /**
@@ -50800,13 +50553,13 @@
       leftWidth = left.attributes.RESOLUTION.width;
     }
 
-    leftWidth = leftWidth || window$5.Number.MAX_VALUE;
+    leftWidth = leftWidth || window$3.Number.MAX_VALUE;
 
     if (right.attributes.RESOLUTION && right.attributes.RESOLUTION.width) {
       rightWidth = right.attributes.RESOLUTION.width;
     }
 
-    rightWidth = rightWidth || window$5.Number.MAX_VALUE; // NOTE - Fallback to bandwidth sort as appropriate in cases where multiple renditions
+    rightWidth = rightWidth || window$3.Number.MAX_VALUE; // NOTE - Fallback to bandwidth sort as appropriate in cases where multiple renditions
     // have the same media dimensions/ resolution
 
     if (leftWidth === rightWidth && left.attributes.BANDWIDTH && right.attributes.BANDWIDTH) {
@@ -50847,7 +50600,7 @@
       var width = playlist.attributes.RESOLUTION && playlist.attributes.RESOLUTION.width;
       var height = playlist.attributes.RESOLUTION && playlist.attributes.RESOLUTION.height;
       bandwidth = playlist.attributes.BANDWIDTH;
-      bandwidth = bandwidth || window$5.Number.MAX_VALUE;
+      bandwidth = bandwidth || window$3.Number.MAX_VALUE;
       return {
         bandwidth: bandwidth,
         width: width,
@@ -50987,7 +50740,7 @@
 
 
   var lastBandwidthSelector = function lastBandwidthSelector() {
-    var pixelRatio = this.useDevicePixelRatio ? window$5.devicePixelRatio || 1 : 1;
+    var pixelRatio = this.useDevicePixelRatio ? window$3.devicePixelRatio || 1 : 1;
     return simpleSelector(this.playlists.master, this.systemBandwidth, parseInt(safeGetComputedStyle(this.tech_.el(), 'width'), 10) * pixelRatio, parseInt(safeGetComputedStyle(this.tech_.el(), 'height'), 10) * pixelRatio, this.limitRenditionByPlayerDimensions);
   };
   /**
@@ -51014,7 +50767,7 @@
     }
 
     return function () {
-      var pixelRatio = this.useDevicePixelRatio ? window$5.devicePixelRatio || 1 : 1;
+      var pixelRatio = this.useDevicePixelRatio ? window$3.devicePixelRatio || 1 : 1;
 
       if (average < 0) {
         average = this.systemBandwidth;
@@ -51206,7 +50959,7 @@
       return;
     }
 
-    var Cue = window$5.WebKitDataCue || window$5.VTTCue;
+    var Cue = window$3.WebKitDataCue || window$3.VTTCue;
     captionArray.forEach(function (caption) {
       var track = caption.stream;
       inbandTextTracks[track].addCue(new Cue(caption.startTime + timestampOffset, caption.endTime + timestampOffset, caption.text));
@@ -51266,7 +51019,7 @@
       return;
     }
 
-    var Cue = window$5.WebKitDataCue || window$5.VTTCue;
+    var Cue = window$3.WebKitDataCue || window$3.VTTCue;
     var metadataTrack = inbandTextTracks.metadataTrack_;
 
     if (!metadataTrack) {
@@ -51279,7 +51032,7 @@
       // This likely occurs when you have an non-timed ID3 tag like TIT2,
       // which is the "Title/Songname/Content description" frame
 
-      if (typeof time !== 'number' || window$5.isNaN(time) || time < 0 || !(time < Infinity)) {
+      if (typeof time !== 'number' || window$3.isNaN(time) || time < 0 || !(time < Infinity)) {
         return;
       }
 
@@ -51862,7 +51615,7 @@
 
 
   var SegmentLoader = /*#__PURE__*/function (_videojs$EventTarget) {
-    inheritsLoose$1(SegmentLoader, _videojs$EventTarget);
+    inheritsLoose(SegmentLoader, _videojs$EventTarget);
 
     function SegmentLoader(settings, options) {
       var _this;
@@ -51976,7 +51729,7 @@
 
       _this.fetchAtBuffer_ = false;
       _this.logger_ = logger("SegmentLoader[" + _this.loaderType_ + "]");
-      Object.defineProperty(assertThisInitialized$1(_this), 'state', {
+      Object.defineProperty(assertThisInitialized(_this), 'state', {
         get: function get() {
           return this.state_;
         },
@@ -52077,7 +51830,7 @@
       this.resetStats_();
 
       if (this.checkBufferTimeout_) {
-        window$5.clearTimeout(this.checkBufferTimeout_);
+        window$3.clearTimeout(this.checkBufferTimeout_);
       }
 
       if (this.syncController_ && this.triggerSyncInfoUpdate_) {
@@ -52461,7 +52214,7 @@
 
     _proto.pause = function pause() {
       if (this.checkBufferTimeout_) {
-        window$5.clearTimeout(this.checkBufferTimeout_);
+        window$3.clearTimeout(this.checkBufferTimeout_);
         this.checkBufferTimeout_ = null;
       }
     }
@@ -52607,10 +52360,10 @@
 
     _proto.monitorBuffer_ = function monitorBuffer_() {
       if (this.checkBufferTimeout_) {
-        window$5.clearTimeout(this.checkBufferTimeout_);
+        window$3.clearTimeout(this.checkBufferTimeout_);
       }
 
-      this.checkBufferTimeout_ = window$5.setTimeout(this.monitorBufferTick_.bind(this), 1);
+      this.checkBufferTimeout_ = window$3.setTimeout(this.monitorBufferTick_.bind(this), 1);
     }
     /**
      * As long as the SegmentLoader is in the READY state, periodically
@@ -52626,10 +52379,10 @@
       }
 
       if (this.checkBufferTimeout_) {
-        window$5.clearTimeout(this.checkBufferTimeout_);
+        window$3.clearTimeout(this.checkBufferTimeout_);
       }
 
-      this.checkBufferTimeout_ = window$5.setTimeout(this.monitorBufferTick_.bind(this), CHECK_BUFFER_DELAY);
+      this.checkBufferTimeout_ = window$3.setTimeout(this.monitorBufferTick_.bind(this), CHECK_BUFFER_DELAY);
     }
     /**
      * fill the buffer with segements unless the sourceBuffers are
@@ -54198,7 +53951,7 @@
       }
 
       removeCuesFromTrack(start, end, this.segmentMetadataTrack_);
-      var Cue = window$5.WebKitDataCue || window$5.VTTCue;
+      var Cue = window$3.WebKitDataCue || window$3.VTTCue;
       var value = {
         custom: segment.custom,
         dateTimeObject: segment.dateTimeObject,
@@ -54545,7 +54298,7 @@
 
 
   var SourceUpdater = /*#__PURE__*/function (_videojs$EventTarget) {
-    inheritsLoose$1(SourceUpdater, _videojs$EventTarget);
+    inheritsLoose(SourceUpdater, _videojs$EventTarget);
 
     function SourceUpdater(mediaSource) {
       var _this;
@@ -54554,7 +54307,7 @@
       _this.mediaSource = mediaSource;
 
       _this.sourceopenListener_ = function () {
-        return shiftQueue('mediaSource', assertThisInitialized$1(_this));
+        return shiftQueue('mediaSource', assertThisInitialized(_this));
       };
 
       _this.mediaSource.addEventListener('sourceopen', _this.sourceopenListener_);
@@ -54571,8 +54324,8 @@
       _this.delayedAudioAppendQueue_ = [];
       _this.videoAppendQueued_ = false;
       _this.codecs = {};
-      _this.onVideoUpdateEnd_ = onUpdateend('video', assertThisInitialized$1(_this));
-      _this.onAudioUpdateEnd_ = onUpdateend('audio', assertThisInitialized$1(_this));
+      _this.onVideoUpdateEnd_ = onUpdateend('video', assertThisInitialized(_this));
+      _this.onAudioUpdateEnd_ = onUpdateend('audio', assertThisInitialized(_this));
 
       _this.onVideoError_ = function (e) {
         // used for debugging
@@ -54708,7 +54461,7 @@
       // errors when attempting to use the function. So we report that it
       // does not support removeSourceBuffer. As of Firefox 83 removeSourceBuffer
       // throws errors, so we report that it does not support this as well.
-      return !videojs$1.browser.IE_VERSION && !videojs$1.browser.IS_FIREFOX && window$5.MediaSource && window$5.MediaSource.prototype && typeof window$5.MediaSource.prototype.removeSourceBuffer === 'function';
+      return !videojs$1.browser.IE_VERSION && !videojs$1.browser.IS_FIREFOX && window$3.MediaSource && window$3.MediaSource.prototype && typeof window$3.MediaSource.prototype.removeSourceBuffer === 'function';
     }
     /**
      * Whether or not the changeType function is supported
@@ -54720,7 +54473,7 @@
     ;
 
     SourceUpdater.canChangeType = function canChangeType() {
-      return window$5.SourceBuffer && window$5.SourceBuffer.prototype && typeof window$5.SourceBuffer.prototype.changeType === 'function';
+      return window$3.SourceBuffer && window$3.SourceBuffer.prototype && typeof window$3.SourceBuffer.prototype.changeType === 'function';
     }
     /**
      * Whether or not the changeType function is supported
@@ -55161,7 +54914,7 @@
    */
 
   var VTTSegmentLoader = /*#__PURE__*/function (_SegmentLoader) {
-    inheritsLoose$1(VTTSegmentLoader, _SegmentLoader);
+    inheritsLoose(VTTSegmentLoader, _SegmentLoader);
 
     function VTTSegmentLoader(settings, options) {
       var _this;
@@ -55435,7 +55188,7 @@
 
       segmentInfo.bytes = simpleSegment.bytes; // Make sure that vttjs has loaded, otherwise, wait till it finished loading
 
-      if (typeof window$5.WebVTT !== 'function' && this.subtitlesTrack_ && this.subtitlesTrack_.tech_) {
+      if (typeof window$3.WebVTT !== 'function' && this.subtitlesTrack_ && this.subtitlesTrack_.tech_) {
         var loadHandler;
 
         var errorHandler = function errorHandler() {
@@ -55497,7 +55250,7 @@
       // the subtitle track
 
       segmentInfo.cues.forEach(function (cue) {
-        _this3.subtitlesTrack_.addCue(_this3.featuresNativeTextTracks_ ? new window$5.VTTCue(cue.startTime, cue.endTime, cue.text) : cue);
+        _this3.subtitlesTrack_.addCue(_this3.featuresNativeTextTracks_ ? new window$3.VTTCue(cue.startTime, cue.endTime, cue.text) : cue);
       }); // Remove any duplicate cues from the subtitle track. The WebVTT spec allows
       // cues to have identical time-intervals, but if the text is also identical
       // we can safely assume it is a duplicate that can be removed (ex. when a cue
@@ -55526,14 +55279,14 @@
       var decoder;
       var decodeBytesToString = false;
 
-      if (typeof window$5.TextDecoder === 'function') {
-        decoder = new window$5.TextDecoder('utf8');
+      if (typeof window$3.TextDecoder === 'function') {
+        decoder = new window$3.TextDecoder('utf8');
       } else {
-        decoder = window$5.WebVTT.StringDecoder();
+        decoder = window$3.WebVTT.StringDecoder();
         decodeBytesToString = true;
       }
 
-      var parser = new window$5.WebVTT.Parser(window$5, window$5.vttjs, decoder);
+      var parser = new window$3.WebVTT.Parser(window$3, window$3.vttjs, decoder);
       segmentInfo.cues = [];
       segmentInfo.timestampmap = {
         MPEGTS: 0,
@@ -55696,7 +55449,7 @@
         cue.endTime += segment.duration;
       } else {
         if ('cueOut' in segment) {
-          cue = new window$5.VTTCue(mediaTime, mediaTime + segment.duration, segment.cueOut);
+          cue = new window$3.VTTCue(mediaTime, mediaTime + segment.duration, segment.cueOut);
           cue.adStartTime = mediaTime; // Assumes tag format to be
           // #EXT-X-CUE-OUT:30
 
@@ -55712,7 +55465,7 @@
               adOffset = _segment$cueOutCont$s[0],
               adTotal = _segment$cueOutCont$s[1];
 
-          cue = new window$5.VTTCue(mediaTime, mediaTime + segment.duration, '');
+          cue = new window$3.VTTCue(mediaTime, mediaTime + segment.duration, '');
           cue.adStartTime = mediaTime - adOffset;
           cue.adEndTime = cue.adStartTime + adTotal;
           track.addCue(cue);
@@ -55862,7 +55615,7 @@
   }];
 
   var SyncController = /*#__PURE__*/function (_videojs$EventTarget) {
-    inheritsLoose$1(SyncController, _videojs$EventTarget);
+    inheritsLoose(SyncController, _videojs$EventTarget);
 
     function SyncController(options) {
       var _this;
@@ -56217,7 +55970,7 @@
 
 
   var TimelineChangeController = /*#__PURE__*/function (_videojs$EventTarget) {
-    inheritsLoose$1(TimelineChangeController, _videojs$EventTarget);
+    inheritsLoose(TimelineChangeController, _videojs$EventTarget);
 
     function TimelineChangeController() {
       var _this;
@@ -57817,7 +57570,7 @@
 
 
   var MasterPlaylistController = /*#__PURE__*/function (_videojs$EventTarget) {
-    inheritsLoose$1(MasterPlaylistController, _videojs$EventTarget);
+    inheritsLoose(MasterPlaylistController, _videojs$EventTarget);
 
     function MasterPlaylistController(options) {
       var _this;
@@ -57865,10 +57618,10 @@
       _this.on('error', _this.pauseLoading);
 
       _this.mediaTypes_ = createMediaTypes();
-      _this.mediaSource = new window$5.MediaSource();
-      _this.handleDurationChange_ = _this.handleDurationChange_.bind(assertThisInitialized$1(_this));
-      _this.handleSourceOpen_ = _this.handleSourceOpen_.bind(assertThisInitialized$1(_this));
-      _this.handleSourceEnded_ = _this.handleSourceEnded_.bind(assertThisInitialized$1(_this));
+      _this.mediaSource = new window$3.MediaSource();
+      _this.handleDurationChange_ = _this.handleDurationChange_.bind(assertThisInitialized(_this));
+      _this.handleSourceOpen_ = _this.handleSourceOpen_.bind(assertThisInitialized(_this));
+      _this.handleSourceEnded_ = _this.handleSourceEnded_.bind(assertThisInitialized(_this));
 
       _this.mediaSource.addEventListener('durationchange', _this.handleDurationChange_); // load the media source into the player
 
@@ -57964,7 +57717,7 @@
 
 
       loaderStats.forEach(function (stat) {
-        _this[stat + '_'] = sumLoaderStat.bind(assertThisInitialized$1(_this), stat);
+        _this[stat + '_'] = sumLoaderStat.bind(assertThisInitialized(_this), stat);
       });
       _this.logger_ = logger('MPC');
       _this.triggeredFmp4Usage = false;
@@ -58001,7 +57754,7 @@
       var _this2 = this;
 
       this.stopABRTimer_();
-      this.abrTimer_ = window$5.setInterval(function () {
+      this.abrTimer_ = window$3.setInterval(function () {
         return _this2.checkABR_();
       }, 250);
     }
@@ -58019,7 +57772,7 @@
         return;
       }
 
-      window$5.clearInterval(this.abrTimer_);
+      window$3.clearInterval(this.abrTimer_);
       this.abrTimer_ = null;
     }
     /**
@@ -59789,7 +59542,7 @@
         });
 
         if (_this.checkCurrentTimeTimeout_) {
-          window$5.clearTimeout(_this.checkCurrentTimeTimeout_);
+          window$3.clearTimeout(_this.checkCurrentTimeTimeout_);
         }
 
         _this.cancelTimer_();
@@ -59808,11 +59561,11 @@
       this.checkCurrentTime_();
 
       if (this.checkCurrentTimeTimeout_) {
-        window$5.clearTimeout(this.checkCurrentTimeTimeout_);
+        window$3.clearTimeout(this.checkCurrentTimeTimeout_);
       } // 42 = 24 fps // 250 is what Webkit uses // FF uses 15
 
 
-      this.checkCurrentTimeTimeout_ = window$5.setTimeout(this.monitorCurrentTime_.bind(this), 250);
+      this.checkCurrentTimeTimeout_ = window$3.setTimeout(this.monitorCurrentTime_.bind(this), 250);
     }
     /**
      * Reset stalled download stats for a specific type of loader
@@ -60732,11 +60485,11 @@
   };
 
   var getVhsLocalStorage = function getVhsLocalStorage() {
-    if (!window$5.localStorage) {
+    if (!window$3.localStorage) {
       return null;
     }
 
-    var storedObject = window$5.localStorage.getItem(LOCAL_STORAGE_KEY$1);
+    var storedObject = window$3.localStorage.getItem(LOCAL_STORAGE_KEY$1);
 
     if (!storedObject) {
       return null;
@@ -60751,7 +60504,7 @@
   };
 
   var updateVhsLocalStorage = function updateVhsLocalStorage(options) {
-    if (!window$5.localStorage) {
+    if (!window$3.localStorage) {
       return false;
     }
 
@@ -60759,7 +60512,7 @@
     objectToStore = objectToStore ? videojs$1.mergeOptions(objectToStore, options) : options;
 
     try {
-      window$5.localStorage.setItem(LOCAL_STORAGE_KEY$1, JSON.stringify(objectToStore));
+      window$3.localStorage.setItem(LOCAL_STORAGE_KEY$1, JSON.stringify(objectToStore));
     } catch (e) {
       // Throws if storage is full (e.g., always on iOS 5+ Safari private mode, where
       // storage is set to 0).
@@ -60862,7 +60615,7 @@
    */
 
   var VhsHandler = /*#__PURE__*/function (_Component) {
-    inheritsLoose$1(VhsHandler, _Component);
+    inheritsLoose(VhsHandler, _Component);
 
     function VhsHandler(source, tech, options) {
       var _this;
@@ -60887,7 +60640,7 @@
                 type: 'usage',
                 name: 'hls-player-access'
               });
-              return assertThisInitialized$1(_this);
+              return assertThisInitialized(_this);
             },
             configurable: true
           });
@@ -60901,7 +60654,7 @@
                 type: 'usage',
                 name: 'vhs-player-access'
               });
-              return assertThisInitialized$1(_this);
+              return assertThisInitialized(_this);
             },
             configurable: true
           });
@@ -60911,7 +60664,7 @@
           Object.defineProperty(_player, 'dash', {
             get: function get() {
               videojs$1.log.warn('player.dash is deprecated. Use player.tech().vhs instead.');
-              return assertThisInitialized$1(_this);
+              return assertThisInitialized(_this);
             },
             configurable: true
           });
@@ -61318,7 +61071,7 @@
         return;
       }
 
-      this.mediaSourceUrl_ = window$5.URL.createObjectURL(this.masterPlaylistController_.mediaSource);
+      this.mediaSourceUrl_ = window$3.URL.createObjectURL(this.masterPlaylistController_.mediaSource);
       this.tech_.src(this.mediaSourceUrl_);
     }
     /**
@@ -61485,8 +61238,8 @@
         delete this.tech_.hls;
       }
 
-      if (this.mediaSourceUrl_ && window$5.URL.revokeObjectURL) {
-        window$5.URL.revokeObjectURL(this.mediaSourceUrl_);
+      if (this.mediaSourceUrl_ && window$3.URL.revokeObjectURL) {
+        window$3.URL.revokeObjectURL(this.mediaSourceUrl_);
         this.mediaSourceUrl_ = null;
       }
 
